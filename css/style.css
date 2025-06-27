@@ -1,0 +1,39 @@
+body {
+  background-color: #24353f;
+  font-family: "Titillium Web", sans-serif;
+}
+
+h1 {
+  color: #17a2b8;
+}
+
+input {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+input:focus {
+  box-shadow: none !important;
+  border-color: #17a2b8;
+}
+
+input::placeholder {
+  color: #ffffff92 !important;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+.box,
+.header {
+  box-shadow: -5px 2px 54px -9px rgba(0, 0, 0, 1);
+}
+
+.logout {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.logout:hover {
+  color: rgba(255, 255, 255);
+}

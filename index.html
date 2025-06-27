@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Titillium Web font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- css files -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Login</title>
+</head>
+
+<body>
+  <header class="header d-none">
+    <div class="container py-2 d-flex justify-content-between align-items-center">
+      <h2 class="text-white fs-5 mb-0">SMART LOGIN</h2>
+      <button type="button" id="logout" class="btn btn-outline-warning logout">Logout</button>
+    </div>
+  </header>
+
+  <section>
+    <div class="my-5 w-50 mx-auto p-5 box">
+      <h1 class="text-center mb-3 fw-medium title">Smart Login System</h1>
+
+      <form id="form" class="">
+        <input type="text" id="name" class="form-control d-none mb-3" placeholder="Enter your name">
+        <input type="text" id="email" class="form-control mb-3" placeholder="Enter your email">
+        <input type="password" id="password" class="form-control mb-3" placeholder="Enter your password">
+        <p id="message" class="text-danger d-none text-center mb-3"></p>
+        <button type="submit" id="action-btn" class="btn btn-outline-info my-3 w-100">Login</button>
+      </form>
+
+      <div class="d-flex gap-1 align-items-center justify-content-center mt-1">
+        <p id="change-form-text" class="text-white text-center para mb-0">Don’t have an account?</p>
+        <button id="change-form-btn" type="button" class="btn text-light py-0 px-1 button">Sign
+          Up</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>
