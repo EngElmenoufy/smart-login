@@ -12,6 +12,7 @@ var changeAuthBtn = document.querySelector("#change-form-btn");
 var logoutBtn = document.querySelector("#logout");
 var currentAuth = "login";
 var users = [];
+var timer;
 if (JSON.parse(localStorage.getItem("users"))) {
   users = JSON.parse(localStorage.getItem("users"));
 }
@@ -27,20 +28,28 @@ function login(e) {
     validationLength(userEmail.value) &&
     validationLength(userPassword.value)
   ) {
-    var userData = {
-      email: userEmail.value.trim(),
-      password: userPassword.value,
-    };
-    var isUserCorrect = isDataCorrect(userData);
-    if (isUserCorrect) {
-      signedIn(isUserCorrect.name);
-      clearInputs();
+    if (validationEmail(userEmail.value)) {
+      var userData = {
+        email: userEmail.value.trim(),
+        password: userPassword.value,
+      };
+      var isUserCorrect = isDataCorrect(userData);
+      if (isUserCorrect) {
+        signedIn(isUserCorrect.name);
+        clearInputs();
+      } else {
+        message.classList.remove("d-none");
+        if (message.classList.contains("text-success")) {
+          message.classList.replace("text-success", "text-danger");
+        }
+        message.innerHTML = "incorrect email or password";
+      }
     } else {
-      message.classList.remove("d-none");
+      message.innerHTML = "Your email address is not valid.";
       if (message.classList.contains("text-success")) {
         message.classList.replace("text-success", "text-danger");
       }
-      message.innerHTML = "incorrect email or password";
+      message.classList.remove("d-none");
     }
   } else {
     message.innerHTML = "All inputs is required";
@@ -58,24 +67,37 @@ function signUp(e) {
     validationLength(userEmail.value) &&
     validationLength(userPassword.value)
   ) {
-    var userData = {
-      name: userName.value.trim(),
-      email: userEmail.value.trim(),
-      password: userPassword.value,
-    };
+    if (validationEmail(userEmail.value)) {
+      var userData = {
+        name: userName.value.trim(),
+        email: userEmail.value.trim(),
+        password: userPassword.value,
+      };
 
-    if (isUserExist(userData)) {
-      message.classList.remove("d-none");
+      if (isUserExist(userData)) {
+        message.classList.remove("d-none");
+        if (message.classList.contains("text-success")) {
+          message.classList.replace("text-success", "text-danger");
+        }
+        message.innerHTML = "email already exists";
+      } else {
+        users.push(userData);
+        localStorage.setItem("users", JSON.stringify(users));
+        message.classList.replace("text-danger", "text-success");
+        message.classList.remove("d-none");
+        message.innerHTML = "Success";
+
+        // I did that to let the user show a success message.
+        timer = setTimeout(() => {
+          changeAuth();
+        }, 2000);
+      }
+    } else {
+      message.innerHTML = "Your email address is not valid.";
       if (message.classList.contains("text-success")) {
         message.classList.replace("text-success", "text-danger");
       }
-      message.innerHTML = "email already exists";
-    } else {
-      users.push(userData);
-      localStorage.setItem("users", JSON.stringify(users));
-      message.classList.replace("text-danger", "text-success");
       message.classList.remove("d-none");
-      message.innerHTML = "Success";
     }
   } else {
     message.innerHTML = "All inputs is required";
@@ -110,6 +132,7 @@ function changeAuth() {
   }
   message.innerHTML = "";
   clearInputs();
+  clearTimeout(timer);
 }
 
 changeAuthBtn.addEventListener("click", changeAuth);
@@ -117,6 +140,14 @@ changeAuthBtn.addEventListener("click", changeAuth);
 function validationLength(input) {
   if (input.length === 0) return false;
   return true;
+}
+
+function validationEmail(email) {
+  var regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  if (regexEmail.test(email)) {
+    return true;
+  }
+  return false;
 }
 
 function isDataCorrect(user) {
